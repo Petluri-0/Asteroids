@@ -1,4 +1,6 @@
 import pygame
+from constants import SCREEN_WIDTH
+from constants import SCREEN_HEIGHT
 from constants import LINE_WIDTH
 from constants import PLAYER_RADIUS
 from constants import PLAYER_TURN_SPEED
@@ -40,6 +42,16 @@ class Player(CircleShape):
         if keys[pygame.K_SPACE]:
             self.shoot()
         self.cooldown -= dt
+
+        if self.position.x < -self.radius:
+            self.position.x = SCREEN_WIDTH + self.radius
+        elif self.position.x > SCREEN_WIDTH + self.radius:
+            self.position.x = -self.radius
+        if self.position.y < -self.radius:
+            self.position.y = SCREEN_HEIGHT + self.radius
+        elif self.position.y > SCREEN_HEIGHT + self.radius:
+            self.position.y = -self.radius
+            
     def move(self,dt):
         unit_vector = pygame.Vector2(0,1)
         rotated_vector = unit_vector.rotate(self.rotation)
